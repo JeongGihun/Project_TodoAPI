@@ -1,0 +1,258 @@
+# To-do API 문서
+
+## 기본 정보
+- Base URL : http://127.0.0.1:5000
+- 응답 형식 : JSON
+
+## 1. 루트 경로(기본 페이지)
+
+### 설명
+기본 메세지를 보여준다.
+
+### 요청 예시
+http://localhost:5000/
+
+
+## 2. 할 일 생성
+**POST** : '/todos'
+
+### 설명
+해야 할 일의 목록을 생성한다
+
+### 요청 예시
+POST http://localhost:5000/todos
+{
+        'title': '알고리즘 문제 풀기',
+        'description': '프로그래머스 DP 3문제'
+}
+
+### 응답 예시
+{
+  "data": {
+    "completed": false,
+    "created_at": "2025-11-20T21:55:55.960818",
+    "description": "",
+    "id": 2,
+    "title": "Flask 공부"
+  },
+  "message": "할 일이 추가되었습니다."
+}
+
+## 3. 전체 할 일 목록 조회
+**GET** : '/todos'
+
+### 설명
+해야 할 일의 목록을 조회한다
+
+### 요청 예시
+GET http://localhost:5000/todos
+
+### 응답 예시
+{
+  "count": 2,
+  "data": [
+    {
+      "completed": false,
+      "created_at": "2025-11-20T21:55:53.915895",
+      "description": "",
+      "id": 1,
+      "title": "알고리즘 문제 풀기"
+    },
+    {
+      "completed": false,
+      "created_at": "2025-11-20T21:55:55.960818",
+      "description": "",
+      "id": 2,
+      "title": "Flask 공부"
+    }
+  ],
+  "message": "할 일 목록 조회 성공"
+}
+
+## 4. 특정 할 일 목록 조회
+**GET** : '/todos/1'
+
+### 설명
+특정 할 일의 목록을 조회한다
+
+### 요청 예시
+GET http://localhost:5000/todos/1
+
+### 응답 예시
+{
+  "data": {
+    "completed": false,
+    "created_at": "2025-11-20T21:55:53.915895",
+    "description": "",
+    "id": 1,
+    "title": "알고리즘 문제 풀기"
+  },
+  "message": "할 일 조회 성공"
+}
+
+## 5. 할 일 목록 변경
+**PUT** : '/todos/1'
+
+### 설명
+특정 할 일의 목록을 변경한다
+
+### 요청 예시
+PUT http://localhost:5000/todos/1
+{
+        'title': '알고리즘 문제 풀기 (수정됨)',
+        'completed': True
+}
+### 응답 예시
+{
+  "data": {
+    "completed": true,
+    "created_at": "2025-11-20T21:55:53.915895",
+    "description": "",
+    "id": 1,
+    "title": "알고리즘 문제 풀기 (수정됨)"
+  },
+  "message": "할 일이 수정되었습니다."
+}
+
+## 6. 할 일 목록 제거
+**DELETE** : '/todos/1'
+
+### 설명
+특정 할 일의 목록을 제거한다
+
+### 요청 예시
+DELETE http://localhost:5000/todos/1
+
+### 응답 예시
+{
+  "data": {
+    "completed": false,
+    "created_at": "2025-11-20T21:55:55.960818",
+    "description": "",
+    "id": 2,
+    "title": "Flask 공부"
+  },
+  "message": "할 일이 삭제되었습니다."
+}
+
+## 에러 응답
+
+### [테스트: 1. 빈 데이터로 POST 요청]
+상태 코드: 400
+응답:
+{
+  "error": "No data provided",
+  "message": "데이터를 입력해주세요."
+}
+
+### [테스트: 2. 제목 없이 POST 요청 (description만)]
+상태 코드: 400
+응답:
+{
+  "error": "Title is required",
+  "message": "할 일 제목을 입력해주세요."
+}
+
+### [테스트: 3. 제목이 빈 문자열]
+상태 코드: 400
+응답:
+{
+  "error": "Title is required",
+  "message": "할 일 제목을 입력해주세요."
+}
+
+### [테스트: 4. 제목이 공백만]
+상태 코드: 400
+응답:
+{
+  "error": "Title is required",
+  "message": "할 일 제목을 입력해주세요."
+}
+
+### [테스트: 5. 제목 100자 초과]
+상태 코드: 400
+응답:
+{
+  "error": "Title too long",
+  "message": "제목은 100자 이내로 입력해주세요."
+}
+
+### [테스트: 6. 수정할 데이터 없이 PUT 요청]
+상태 코드: 400
+응답:
+{
+  "error": "No data",
+  "message": "수정할 데이터를 입력해주세요."
+}
+
+### [테스트: 7. 제목을 빈 문자열로 수정]
+상태 코드: 400
+응답:
+{
+  "error": "Title is required",
+  "message": "제목은 비울 수 없습니다."
+}
+
+### [테스트: 8. 제목을 100자 초과로 수정]
+상태 코드: 400
+응답:
+{
+  "error": "Title too long",
+  "message": "제목은 100글자 이내로 입력해주세요."
+}
+
+### [테스트: 9. completed에 문자열 전송 (잘못된 타입)]
+상태 코드: 400
+응답:
+{
+  "error": "Invalid data type",
+  "message": "completed는 true 혹은 false만 가능합니다."
+}
+
+### [테스트: 10. completed에 숫자 전송 (잘못된 타입)]
+상태 코드: 400
+응답:
+{
+  "error": "Invalid data type",
+  "message": "completed는 true 혹은 false만 가능합니다."
+}
+
+### [테스트: 11. completed에 'yes' 전송 (잘못된 값)]
+상태 코드: 400
+응답:
+{
+  "error": "Invalid data type",
+  "message": "completed는 true 혹은 false만 가능합니다."
+}
+
+### [테스트: 12. 존재하지 않는 ID 조회 (GET /todos/999)]
+상태 코드: 404
+응답:
+{
+  "error": "Not Found",
+  "message": "ID 999인 할 일을 찾을 수 없습니다."
+}
+
+### [테스트: 13. 존재하지 않는 ID 수정 (PUT /todos/888)]
+상태 코드: 400
+응답:
+{
+  "error": "No data",
+  "message": "수정할 데이터를 입력해주세요."
+}
+
+### [테스트: 14. 존재하지 않는 ID 삭제 (DELETE /todos/777)]
+상태 코드: 404
+응답:
+{
+  "error": "Not Found",
+  "message": "ID 777인 할 일을 찾을 수 없습니다."
+}
+
+### [테스트: 15. title이 None]
+상태 코드: 500
+응답:
+{
+  "error": "Internal server error",
+  "message": "서버 오류가 발생했습니다."
+}
