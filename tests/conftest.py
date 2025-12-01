@@ -47,6 +47,10 @@ def auth_client(client) :
         def get(self, *args, **kwargs):
             kwargs.setdefault('headers', {})['Authorization'] = f'Bearer {self.token}'
             return self.client.get(*args, **kwargs)
+        # *args : 위치 인자 -> 튜플로 묶임
+        # **kwargs : 키워드 인자 -> dict로 묶임
+        # headers 라는 키가 없으면 빈 dict 생성 및 반환, 있으면 기존 값 반환
+        # 반환된 dict에 키-값 추가
 
         def post(self, *args, **kwargs):
             kwargs.setdefault('headers', {})['Authorization'] = f'Bearer {self.token}'
