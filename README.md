@@ -45,7 +45,7 @@ Flask를 이용한 할 일 목록 만들기
   pytest -v -s (상세 출력)
 
 ## 프로젝트 구조
-'''
+```
   todo-api/
   ├── app.py              # Flask 애플리케이션 메인
   ├── models.py           # 데이터베이스 모델 (User, Todo)
@@ -59,15 +59,15 @@ Flask를 이용한 할 일 목록 만들기
   │   ├── test_auth.py
   │   └── test_todos.py
   └── README.md           # 프로젝트 문서
-'''
+```
 
 ## 테스트 파일 구조
-'''
+```
 tests/
   ├── conftest.py      # 테스트 설정 (fixtures)
   ├── test_auth.py     # 회원가입/로그인 테스트
   └── test_todos.py    # Todo CRUD 테스트
-'''
+```
 
 ## API 명세
 - API_DOCS.md 확인
