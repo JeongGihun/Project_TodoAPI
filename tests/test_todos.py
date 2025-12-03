@@ -2,7 +2,7 @@
 
 def test_create_todo_success(auth_client) :
     """Todo 생성 성공 테스트"""
-    response = auth_client.post('./todos', json = {
+    response = auth_client.post('/todos', json = {
         'title' : 'Test Todo',
         'description' : 'Test Description'
     })
@@ -61,7 +61,7 @@ def test_update_todo(auth_client) :
     # 수정
     response = auth_client.put(f'/todos/{todo_id}', json = {
         'title' : 'Updated',
-        'complted' : True
+        'completed' : True
     })
 
     assert response.status_code == 200
